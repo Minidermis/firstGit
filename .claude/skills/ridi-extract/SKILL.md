@@ -1,9 +1,9 @@
 ---
-name: kakao-page-extract
-description: Save a Kakao Page (카카오페이지, page.kakao.com) or Ridi (리디북스, ridibooks.com) web-novel episode that the user already has open and can read in their own Chrome, as clean Markdown for their own offline reading — or save a work's public listing (title, author, synopsis, episode list) from its series/book page. Works through Claude in Chrome on the user's logged-in session. The two viewers change their rendering without notice (text in the DOM, text inside iframes or shadow roots, CSS pseudo-element text, invisible per-account strings, or pages drawn as images/canvas), so this probes how the page is actually rendered before extracting anything and stops when the text isn't there as text. Use it whenever the user points at a page.kakao.com/content/... or ridibooks.com/books/... URL and wants an episode or the work's info saved, exported, read offline, or translated. Prefer this over a plain innerText grab on these sites, which silently picks up menus and hidden text and misses pseudo-element runs.
+name: ridi-extract
+description: Save a Ridi (리디, 리디북스, ridibooks.com) book or web-novel episode — or a Kakao Page (카카오페이지, page.kakao.com) episode — that the user already has open and can read in their own Chrome, as clean Markdown for their own offline reading — or save a work's public listing (title, author, synopsis, episode list) from its series/book page. Works through Claude in Chrome on the user's logged-in session. The two viewers change their rendering without notice (text in the DOM, text inside iframes or shadow roots, CSS pseudo-element text, invisible per-account strings, or pages drawn as images/canvas), so this probes how the page is actually rendered before extracting anything and stops when the text isn't there as text. Use it whenever the user points at a ridibooks.com/books/... (including /books/<id>/view) or page.kakao.com/content/... URL and wants an episode or the work's info saved, exported, read offline, or translated. Prefer this over a plain innerText grab on these sites, which silently picks up menus and hidden text and misses pseudo-element runs.
 ---
 
-# Saving Kakao Page / Ridi episodes you're reading
+# Saving Ridi (and Kakao Page) episodes you're reading
 
 This is for episodes the user can already open and read in their own browser
 session — it saves, for their own offline copy, the text the page is already
@@ -24,10 +24,10 @@ into chat; the file on disk is the deliverable, and the report is metadata
 
 | URL | What it is | What you can save |
 |---|---|---|
-| `page.kakao.com/content/<seriesId>` | Kakao series home | Listing: title, author, synopsis, episode list |
-| `page.kakao.com/content/<seriesId>/viewer/<productId>` | Kakao episode viewer | The episode, if rendered as text |
 | `ridibooks.com/books/<bookId>` | Ridi book detail | Listing: title, author, synopsis, volumes/episodes |
 | `ridibooks.com/books/<bookId>/view` | Ridi web viewer (may redirect to a `view.` host) | The episode/volume, if rendered as text |
+| `page.kakao.com/content/<seriesId>` | Kakao series home | Listing: title, author, synopsis, episode list |
+| `page.kakao.com/content/<seriesId>/viewer/<productId>` | Kakao episode viewer | The episode, if rendered as text |
 
 If the user gives a series/book URL but wants an episode, ask which episode and
 have them open it (so their own session unlocks it), rather than picking one.
@@ -179,7 +179,7 @@ Confirm the file exists (a blocked download reports success from the page's
 side), then run:
 
 ```bash
-python scripts/verify.py ~/Downloads/kakaopage_<seriesId>_<productId>.md \
+python scripts/verify.py ~/Downloads/ridi_<bookId>.md \
   --paras 212 --chars 5310 --sum 229514012 --xor 40811
 ```
 

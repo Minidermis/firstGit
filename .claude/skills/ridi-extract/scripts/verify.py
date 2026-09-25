@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify a saved Kakao Page / Ridi episode file against the checksums that
+"""Verify a saved Ridi / Kakao Page episode file against the checksums that
 02_extract.js / 03_download.js reported in the browser.
 
 The failure mode this guards against is quiet: an episode that lost a few
@@ -9,7 +9,7 @@ catches both, and checking for leftover PUA / zero-width characters catches a
 viewer that substituted glyphs through a private font.
 
 Usage:
-    python verify.py kakaopage_58825221_123.md --paras 212 --chars 5310 --sum 229514012 --xor 40811
+    python verify.py ridi_2008055678.md --paras 212 --chars 5310 --sum 229514012 --xor 40811
 
 Omit the expectation flags to just print what's in the file.
 """
